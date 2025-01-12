@@ -1,0 +1,188 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "learn/math-appendix.html",
+    "href": "learn/math-appendix.html",
+    "title": "Appendix",
+    "section": "",
+    "text": "Appendix\n\n\n\n\n\n\nvec() rules\n\n\n\n\n\\(\\text{vec}(AXB) = (B' \\otimes A)\\text{vec}(X)\\)"
+  },
+  {
+    "objectID": "learn/models/index.html",
+    "href": "learn/models/index.html",
+    "title": "Models",
+    "section": "",
+    "text": "Local Projections\n\n\nIf SVARs are like iterative forecasting, then LPs are like direct forecasting.\n\n\n\n\n\n\n\n\n\n\nStructural Vector Autoregressions\n\n\nLike VAR models but causality plays a role.\n\n\n\n\n\n\n\n\n\n\nVector Autoregressions\n\n\nVector Autoregressions (VAR) are probably the most commonly used method to model dynamics between multiple variables.\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "learn/models/var/simulation.html",
+    "href": "learn/models/var/simulation.html",
+    "title": "How do we simulate VAR(p) models?",
+    "section": "",
+    "text": "Since the VAR model is a data generating process, we should be able to simulate from it. And that is indeed what we will do in this section. Why do we want to simulate from the model? Simply because being able to simulate from a model allows us to explore the model, test theories, and gain insights that are otherwise only gained using maths – which is oftentimes more difficult.\n\n\nWe start simple and ask how we can simulate a VAR(1) model. Remember that VAR(1) was given by \\[\n\\mathbf{y}_{t} = \\mathbf{c}+ \\mathbf{B}_1\\mathbf{y}_{t-1} + \\mathbf{u}_t.\n\\] So what do we need to be able to simulate this model? First, we need to choose how many variables are simultaneously modelled, i.e. we need to decide on the dimension of \\(\\mathbf{y}_t\\) and for how many periods we want to simulate the model. Let’s call these \\(K\\) and \\(T\\) respectively.\n\nK = 3  # Simulating 3 variables\nT = 250  # for 250 periods (think of quarters)\n\nSecond, we need values for all the coefficient vectors and matrices. These are \\(\\mathbf{c}\\) and \\(\\mathbf{B}_1\\). Let’s define these – we set \\(\\mathbf{c}=\\mathbf{0}\\) for simplicity.\n\nB1 = 0.5 * randn(K, K)\nc = zeros(K)\n\nThird, we need to make some assumption on the innovations (the error terms) \\(\\mathbf{u}_t\\).1 A very common assumption is that these are normally distributed. For simplicity, we will stick to standard normals. It’s good practice to draw all of the error terms at the same time.\n\nU = randn(T, K)  # each row corresponds to one u_t\n\nThat’s it. We are ready to simulate the model. Or are we? Let’s check how we could get the first period’s value. For the first period we have \\[\n\\mathbf{y}_1 = \\mathbf{c}+ \\mathbf{B}_1\\mathbf{y}_0 + \\mathbf{u}_1.\n\\] What is \\(\\mathbf{y}_0\\). That’s our missing piece. Because we model a dynamic system, and dynamic systems are (at least initially) dependent on a starting value, we need to define a starting value, a value for \\(\\mathbf{y}_0\\). For now, let’s simply choose zero as a starting point.\n\ny0 = zeros(K)\n\nSo now we are ready; we can simulate the model. Because it’s a dynamic system, we simply loop through all the periods we want to simulate.\n\nY = zeros(T+1, K)\nY[1, :] = y0\nfor i=2:(T+1)\n  Y[i, :] = c + B1*Y[i-1, :] + U[i-1, :]\nend\n\nNote that in the code above the indexing is a bit strange. That’s all because we put the initial value in the Y matrix as the first element.\nThat’s it. We just simulated a VAR(1).",
+    "crumbs": [
+      "Vector Autoregressions",
+      "Simulation"
+    ]
+  },
+  {
+    "objectID": "learn/models/var/simulation.html#simulating-a-var1-model",
+    "href": "learn/models/var/simulation.html#simulating-a-var1-model",
+    "title": "How do we simulate VAR(p) models?",
+    "section": "",
+    "text": "We start simple and ask how we can simulate a VAR(1) model. Remember that VAR(1) was given by \\[\n\\mathbf{y}_{t} = \\mathbf{c}+ \\mathbf{B}_1\\mathbf{y}_{t-1} + \\mathbf{u}_t.\n\\] So what do we need to be able to simulate this model? First, we need to choose how many variables are simultaneously modelled, i.e. we need to decide on the dimension of \\(\\mathbf{y}_t\\) and for how many periods we want to simulate the model. Let’s call these \\(K\\) and \\(T\\) respectively.\n\nK = 3  # Simulating 3 variables\nT = 250  # for 250 periods (think of quarters)\n\nSecond, we need values for all the coefficient vectors and matrices. These are \\(\\mathbf{c}\\) and \\(\\mathbf{B}_1\\). Let’s define these – we set \\(\\mathbf{c}=\\mathbf{0}\\) for simplicity.\n\nB1 = 0.5 * randn(K, K)\nc = zeros(K)\n\nThird, we need to make some assumption on the innovations (the error terms) \\(\\mathbf{u}_t\\).1 A very common assumption is that these are normally distributed. For simplicity, we will stick to standard normals. It’s good practice to draw all of the error terms at the same time.\n\nU = randn(T, K)  # each row corresponds to one u_t\n\nThat’s it. We are ready to simulate the model. Or are we? Let’s check how we could get the first period’s value. For the first period we have \\[\n\\mathbf{y}_1 = \\mathbf{c}+ \\mathbf{B}_1\\mathbf{y}_0 + \\mathbf{u}_1.\n\\] What is \\(\\mathbf{y}_0\\). That’s our missing piece. Because we model a dynamic system, and dynamic systems are (at least initially) dependent on a starting value, we need to define a starting value, a value for \\(\\mathbf{y}_0\\). For now, let’s simply choose zero as a starting point.\n\ny0 = zeros(K)\n\nSo now we are ready; we can simulate the model. Because it’s a dynamic system, we simply loop through all the periods we want to simulate.\n\nY = zeros(T+1, K)\nY[1, :] = y0\nfor i=2:(T+1)\n  Y[i, :] = c + B1*Y[i-1, :] + U[i-1, :]\nend\n\nNote that in the code above the indexing is a bit strange. That’s all because we put the initial value in the Y matrix as the first element.\nThat’s it. We just simulated a VAR(1).",
+    "crumbs": [
+      "Vector Autoregressions",
+      "Simulation"
+    ]
+  },
+  {
+    "objectID": "learn/models/var/simulation.html#footnotes",
+    "href": "learn/models/var/simulation.html#footnotes",
+    "title": "How do we simulate VAR(p) models?",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nI will use innovation and error interchangeably to describe \\(\\mathbf{u}_t\\).↩︎",
+    "crumbs": [
+      "Vector Autoregressions",
+      "Simulation"
+    ]
+  },
+  {
+    "objectID": "documentation/KeynesSVAR/index.html",
+    "href": "documentation/KeynesSVAR/index.html",
+    "title": "This is just a placeholder",
+    "section": "",
+    "text": "This is just a placeholder"
+  },
+  {
+    "objectID": "documentation/KeynesAPI/fitting.html",
+    "href": "documentation/KeynesAPI/fitting.html",
+    "title": "Fitting",
+    "section": "",
+    "text": "Fitting",
+    "crumbs": [
+      "Fitting"
+    ]
+  },
+  {
+    "objectID": "documentation/KeynesAPI/index.html",
+    "href": "documentation/KeynesAPI/index.html",
+    "title": "This is just a placeholder",
+    "section": "",
+    "text": "This is just a placeholder",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "documentation/KeynesVAR/index.html",
+    "href": "documentation/KeynesVAR/index.html",
+    "title": "This is just a placeholder",
+    "section": "",
+    "text": "This is just a placeholder"
+  },
+  {
+    "objectID": "documentation/KeynesBootstrap/index.html",
+    "href": "documentation/KeynesBootstrap/index.html",
+    "title": "This is just a placeholder",
+    "section": "",
+    "text": "This is just a placeholder"
+  },
+  {
+    "objectID": "documentation/KeynesAPI/models.html",
+    "href": "documentation/KeynesAPI/models.html",
+    "title": "Models",
+    "section": "",
+    "text": "Models",
+    "crumbs": [
+      "Models"
+    ]
+  },
+  {
+    "objectID": "documentation/KeynesAPI/exceptions.html",
+    "href": "documentation/KeynesAPI/exceptions.html",
+    "title": "Exceptions",
+    "section": "",
+    "text": "Exceptions",
+    "crumbs": [
+      "Exceptions"
+    ]
+  },
+  {
+    "objectID": "documentation/KeynesAPI/statistics.html",
+    "href": "documentation/KeynesAPI/statistics.html",
+    "title": "Statistics",
+    "section": "",
+    "text": "Statistics",
+    "crumbs": [
+      "Statistics"
+    ]
+  },
+  {
+    "objectID": "learn/models/svar/index.html",
+    "href": "learn/models/svar/index.html",
+    "title": "Structural Vector Autoregressions",
+    "section": "",
+    "text": "This is just a placeholder",
+    "crumbs": [
+      "Structural Vector Autoregressions"
+    ]
+  },
+  {
+    "objectID": "learn/models/var/index.html",
+    "href": "learn/models/var/index.html",
+    "title": "Vector Autoregressions",
+    "section": "",
+    "text": "A Vector Autoregression (VAR) is a simple model that linkes the current data to past observations and an error term. More formally, if we observe a set of variales, a vector of variables, every period and denote this vector with \\(y_t\\), then a VAR(1) model has the form \\[\n\\mathbf{y}_t = \\mathbf{c}+ \\mathbf{B}_1\\mathbf{y}_{t-1} + \\mathbf{u}_t,\n\\] where \\(\\mathbf{c}\\) is some vector of constants, \\(\\mathbf{B}_1\\) the the autoregressive (AR) matrix and \\(\\mathbf{u}_t\\) is some error term. We call this model a VAR(1) model because it relates the current observation \\(\\mathbf{y}_t\\) to a single lagged observation \\(\\mathbf{y}_{t-1}\\).\nThe VAR(1) model can be generalised by extending the number of lags in the model. With \\(p\\) lags in the model, the VAR(p) – note the \\(p\\) in parentheses – becomes \\[\n\\mathbf{y}_t = \\mathbf{c}+ \\sum_{i=1}^p \\mathbf{B}_i \\mathbf{y}_{t-i} + \\mathbf{u}_t,\n\\] where \\(\\mathbf{B}_i\\) is the i-th autoregressive (AR) matrix.\n\n\nAbove are the mathematical exppressions, but what does a VAR model actually do and why do people use it? These are good questions, and VAR models have been used in various ways and thus have also been motivated in various ways. The easiest motivation is to note that a VAR model simply links the current observation to past observation. As such, a VAR model is claiming that there are some dynamics in the system – whether that’s an economy, a business, the oxygen level of a person, etc – and that these dynamics are well described by a linear function that links the current observation to a finite past.\nNaturally, there are many siutations in which both the linear and finite past aspects are doubtful. However, both concerns can somewhat be remedied. First, the finite past limitation can be lifted by working with VAR(\\(\\infty\\)) models. Second, the linearity limitation cannot be lifted but can at least be defended in the following way.\nSuppose the real system actually features non-linear dynamics – however still with a finite past. We could express this mathematically as \\[\n\\mathbf{y}_t = f(\\mathbf{y}_{t-1}, \\ldots, \\mathbf{y}_{t-p}) + \\mathbf{u}_t.\n\\] Also suppose that this non-linear system has some fixed point \\(\\bar{\\mathbf{y}}\\) such that \\[\n\\bar{\\mathbf{y}} = f(\\bar{\\mathbf{y}}, \\ldots, \\bar{\\mathbf{y}}) + \\mathbf{0}.\n\\] Thus, if all previous values are at the fixed point and the innovation (the error term) are zero, then the system will remain at the fixed point. If these two assumptions describe the true system’s dynamics, then the VAR(p) model can be considered as a linear approximation of the possibly complicated non-linear dynamics. Here, the approximation is taken around the fixed point. Thus, taking a first-order Taylor approximation around the fixed point we get \\[\n\\begin{split}\n\\mathbf{y}_t &= f(\\bar{\\mathbf{y}}, \\ldots, \\bar{\\mathbf{y}}) + \\sum_{i=1}^p\\frac{\\partial f}{\\partial \\mathbf{y}_{t-i}}(\\mathbf{y}_{t-i} - \\bar{\\mathbf{y}}) + \\mathbf{u}_t \\\\\n&= \\underbrace{\\left[f(\\bar{\\mathbf{y}}, \\ldots, \\bar{\\mathbf{y}}) - \\sum_{i=1}^p\\frac{\\partial f}{\\partial \\mathbf{y}_{t-i}}\\bar{\\mathbf{y}}\\right]}_{\\mathbf{c}} + \\sum_{i=1}^p \\underbrace{\\frac{\\partial f}{\\partial \\mathbf{y}_{t-i}}}_{\\mathbf{B}_i}\\mathbf{y}_{t-i} + \\mathbf{u}_t,\n\\end{split}\n\\] which is a VAR(p) model.\n\n\n\n\n\n\\[\ny_t' = \\sum_{i=1}^p y_{t-i}'B_i' + u_t'\n\\]\n\\[\nz_t = \\left[y_{t-1}', \\ldots, y_{t-p}' \\right], \\quad\nB_+ = \\left[B_1, \\ldots, B_p \\right]\n\\]\n\\[\ny_t' = z_tB_+' + u_t'\n\\]\n\\[\nY = \\begin{bmatrix}y_{p+1}' \\\\ y_{p+2}' \\\\ \\vdots \\\\ y_{T-1}' \\\\ y_{T}' \\end{bmatrix},\n\\quad\nU = \\begin{bmatrix}u_{p+1}' \\\\ u_{p+2}' \\\\ \\vdots \\\\ u_{T-1}' \\\\ u_{T}' \\end{bmatrix},\n\\quad\nZ = \\begin{bmatrix}z_{p+1} \\\\ z_{p+1} \\\\ \\vdots \\\\ z_{T-1} \\\\ z_{T} \\end{bmatrix}\n\\]\n\\[\nY = ZB_+' + U\n\\]\n\n\n\n\\[\n\\begin{split}\ny &= \\text{vec}(Y) \\\\\n&= \\text{vec}(ZB_+') + \\text{vec}(U) \\\\\n&= \\text{vec}(IZB_+') + \\text{vec}(U) \\\\\n&= (B_+ \\otimes I)\\text{vec}(Z) + \\text{vec}(U)\n\\end{split}\n\\]\nAbove works, but for what we want to do, the following way is actually nicer.\n\\[\n\\begin{split}\ny &= \\text{vec}(Y) \\\\\n&= \\text{vec}(ZB_+') + \\text{vec}(U) \\\\\n&= \\text{vec}(ZB_+'I) + \\text{vec}(U) \\\\\n&= (I \\otimes Z)\\text{vec}(B_+') + \\text{vec}(U)\n&= Xb + u\n\\end{split}\n\\]\nStandard OLS then implies\n\\[\n\\hat{b} = [X'X]^{-1}X'y = \\left[(I\\otimes Z)'(I\\otimes Z)\\right]^{-1}(I\\otimes Z)y\n\\]",
+    "crumbs": [
+      "Vector Autoregressions"
+    ]
+  },
+  {
+    "objectID": "learn/models/var/index.html#so-what-does-a-var-model-do",
+    "href": "learn/models/var/index.html#so-what-does-a-var-model-do",
+    "title": "Vector Autoregressions",
+    "section": "",
+    "text": "Above are the mathematical exppressions, but what does a VAR model actually do and why do people use it? These are good questions, and VAR models have been used in various ways and thus have also been motivated in various ways. The easiest motivation is to note that a VAR model simply links the current observation to past observation. As such, a VAR model is claiming that there are some dynamics in the system – whether that’s an economy, a business, the oxygen level of a person, etc – and that these dynamics are well described by a linear function that links the current observation to a finite past.\nNaturally, there are many siutations in which both the linear and finite past aspects are doubtful. However, both concerns can somewhat be remedied. First, the finite past limitation can be lifted by working with VAR(\\(\\infty\\)) models. Second, the linearity limitation cannot be lifted but can at least be defended in the following way.\nSuppose the real system actually features non-linear dynamics – however still with a finite past. We could express this mathematically as \\[\n\\mathbf{y}_t = f(\\mathbf{y}_{t-1}, \\ldots, \\mathbf{y}_{t-p}) + \\mathbf{u}_t.\n\\] Also suppose that this non-linear system has some fixed point \\(\\bar{\\mathbf{y}}\\) such that \\[\n\\bar{\\mathbf{y}} = f(\\bar{\\mathbf{y}}, \\ldots, \\bar{\\mathbf{y}}) + \\mathbf{0}.\n\\] Thus, if all previous values are at the fixed point and the innovation (the error term) are zero, then the system will remain at the fixed point. If these two assumptions describe the true system’s dynamics, then the VAR(p) model can be considered as a linear approximation of the possibly complicated non-linear dynamics. Here, the approximation is taken around the fixed point. Thus, taking a first-order Taylor approximation around the fixed point we get \\[\n\\begin{split}\n\\mathbf{y}_t &= f(\\bar{\\mathbf{y}}, \\ldots, \\bar{\\mathbf{y}}) + \\sum_{i=1}^p\\frac{\\partial f}{\\partial \\mathbf{y}_{t-i}}(\\mathbf{y}_{t-i} - \\bar{\\mathbf{y}}) + \\mathbf{u}_t \\\\\n&= \\underbrace{\\left[f(\\bar{\\mathbf{y}}, \\ldots, \\bar{\\mathbf{y}}) - \\sum_{i=1}^p\\frac{\\partial f}{\\partial \\mathbf{y}_{t-i}}\\bar{\\mathbf{y}}\\right]}_{\\mathbf{c}} + \\sum_{i=1}^p \\underbrace{\\frac{\\partial f}{\\partial \\mathbf{y}_{t-i}}}_{\\mathbf{B}_i}\\mathbf{y}_{t-i} + \\mathbf{u}_t,\n\\end{split}\n\\] which is a VAR(p) model.",
+    "crumbs": [
+      "Vector Autoregressions"
+    ]
+  },
+  {
+    "objectID": "learn/models/var/index.html#other-forms",
+    "href": "learn/models/var/index.html#other-forms",
+    "title": "Vector Autoregressions",
+    "section": "",
+    "text": "\\[\ny_t' = \\sum_{i=1}^p y_{t-i}'B_i' + u_t'\n\\]\n\\[\nz_t = \\left[y_{t-1}', \\ldots, y_{t-p}' \\right], \\quad\nB_+ = \\left[B_1, \\ldots, B_p \\right]\n\\]\n\\[\ny_t' = z_tB_+' + u_t'\n\\]\n\\[\nY = \\begin{bmatrix}y_{p+1}' \\\\ y_{p+2}' \\\\ \\vdots \\\\ y_{T-1}' \\\\ y_{T}' \\end{bmatrix},\n\\quad\nU = \\begin{bmatrix}u_{p+1}' \\\\ u_{p+2}' \\\\ \\vdots \\\\ u_{T-1}' \\\\ u_{T}' \\end{bmatrix},\n\\quad\nZ = \\begin{bmatrix}z_{p+1} \\\\ z_{p+1} \\\\ \\vdots \\\\ z_{T-1} \\\\ z_{T} \\end{bmatrix}\n\\]\n\\[\nY = ZB_+' + U\n\\]\n\n\n\n\\[\n\\begin{split}\ny &= \\text{vec}(Y) \\\\\n&= \\text{vec}(ZB_+') + \\text{vec}(U) \\\\\n&= \\text{vec}(IZB_+') + \\text{vec}(U) \\\\\n&= (B_+ \\otimes I)\\text{vec}(Z) + \\text{vec}(U)\n\\end{split}\n\\]\nAbove works, but for what we want to do, the following way is actually nicer.\n\\[\n\\begin{split}\ny &= \\text{vec}(Y) \\\\\n&= \\text{vec}(ZB_+') + \\text{vec}(U) \\\\\n&= \\text{vec}(ZB_+'I) + \\text{vec}(U) \\\\\n&= (I \\otimes Z)\\text{vec}(B_+') + \\text{vec}(U)\n&= Xb + u\n\\end{split}\n\\]\nStandard OLS then implies\n\\[\n\\hat{b} = [X'X]^{-1}X'y = \\left[(I\\otimes Z)'(I\\otimes Z)\\right]^{-1}(I\\otimes Z)y\n\\]",
+    "crumbs": [
+      "Vector Autoregressions"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "KeynesXJulia",
+    "section": "",
+    "text": "some text comes here that explains what KeynesXJulia is, where I am planning to take it and some more text. some text comes here that explains what KeynesXJulia is, where I am planning to take it and some more text. some text comes here that explains what KeynesXJulia is"
+  },
+  {
+    "objectID": "index.html#models",
+    "href": "index.html#models",
+    "title": "KeynesXJulia",
+    "section": "Models",
+    "text": "Models\n\n\n\n\n\n\n\nLocal Projections\n\n\nIf SVARs are like iterative forecasting, then LPs are like direct forecasting.\n\n\n\n\n\n\n\n\n\n\nStructural Vector Autoregressions\n\n\nLike VAR models but causality plays a role.\n\n\n\n\n\n\n\n\n\n\nVector Autoregressions\n\n\nVector Autoregressions (VAR) are probably the most commonly used method to model dynamics between multiple variables.\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html#statistics",
+    "href": "index.html#statistics",
+    "title": "KeynesXJulia",
+    "section": "Statistics",
+    "text": "Statistics\n\n\n\n\n\n\n\nForecast Error Variance Decomposition\n\n\nFind out how much each shock contributes to the variance.\n\n\n\n\n\n\n\n\n\n\nForecasts\n\n\nLearn how to predict the future.\n\n\n\n\n\n\n\n\n\n\nHistorical Decompositions\n\n\nWhich shocks happened in the past and how did they contribute to historical developments?\n\n\n\n\n\n\n\n\n\n\nImpulse Response Functions\n\n\nWhat happens if there is a shock to the system? What is the effect of monetary and fiscal policy?\n\n\n\n\n\n\n\nNo matching items"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "listing": "/learn/models/index.html",
+    "items": [
+      "/learn/models/local-projections/index.html",
+      "/learn/models/svar/index.html",
+      "/learn/models/var/index.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/learn/models/local-projections/index.html",
+      "/learn/models/svar/index.html",
+      "/learn/models/var/index.html",
+      "/learn/statistics/fevd.html",
+      "/learn/statistics/forecast.html",
+      "/learn/statistics/historical-decomposition.html",
+      "/learn/statistics/irf.html"
+    ]
+  }
+]
