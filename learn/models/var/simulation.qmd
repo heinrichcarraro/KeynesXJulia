@@ -73,6 +73,7 @@ That's it. We just simulated a VAR(1).
 
 
 
+
 ## The Companion Form
 
 ### Using KeynesVAR

@@ -2,6 +2,13 @@ project:
   type: website
 
 website:
+  announcement:
+    icon: "cone-striped"
+    dismissable: false
+    content: "**Warning**: This website and the entire KeynesXJulia environment is still under construction. Please come back later."
+    type: danger
+    position: below-navbar
+
   title: "KeynesXJulia"
   page-navigation: true
   navbar:
