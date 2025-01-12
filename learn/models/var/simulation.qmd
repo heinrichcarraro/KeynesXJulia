@@ -1,0 +1,83 @@
+---
+execute: 
+  output: false
+engine: julia
+---
+
+{{< include /_utils.qmd >}}
+
+# How do we simulate VAR(p) models?
+
+Since the VAR model is a data generating process, we should be able to simulate from it. And that is indeed what we will do in this section. Why do we want to simulate from the model? Simply because being able to simulate from a model allows us to explore the model, test theories, and gain insights that are otherwise only gained using maths -- which is oftentimes more difficult. 
+
+## Simulating a VAR(1) model
+
+
+```{julia}
+#| echo: false
+#| output: false
+using Random
+Random.seed!(123)
+```
+
+We start simple and ask how we can simulate a VAR(1) model. Remember that VAR(1) was given by 
+$$
+\by_{t} = \bc + \bB_1\by_{t-1} + \bu_t.
+$$
+So what do we need to be able to simulate this model? First, we need to choose how many variables are simultaneously modelled, i.e. we need to decide on the dimension of $\by_t$ and for how many periods we want to simulate the model. Let's call these $K$ and $T$ respectively. 
+
+```{julia}
+K = 3  # Simulating 3 variables
+T = 250  # for 250 periods (think of quarters)
+```
+
+Second, we need values for all the coefficient vectors and matrices. These are $\bc$ and $\bB_1$. Let's define these -- we set $\bc=\mathbf{0}$ for simplicity. 
+
+```{julia}
+B1 = 0.5 * randn(K, K)
+c = zeros(K)
+```
+
+Third, we need to make some assumption on the innovations (the error terms) $\bu_t$.^[I will use innovation and error interchangeably to describe $\bu_t$.] A very common assumption is that these are normally distributed. For simplicity, we will stick to standard normals. It's good practice to draw all of the error terms at the same time. 
+
+
+```{julia}
+U = randn(T, K)  # each row corresponds to one u_t
+```
+
+That's it. We are ready to simulate the model. Or are we? Let's check how we could get the first period's value. For the first period we have
+$$
+\by_1 = \bc + \bB_1\by_0 + \bu_1.
+$$
+What is $\by_0$. That's our missing piece. Because we model a dynamic system, and dynamic systems are (at least initially) dependent on a starting value, we need to define a starting value, a value for $\by_0$. For now, let's simply choose zero as a starting point. 
+
+```{julia}
+y0 = zeros(K)
+```
+
+So now we are ready; we can simulate the model. Because it's a dynamic system, we simply loop through all the periods we want to simulate. 
+
+```{julia}
+Y = zeros(T+1, K)
+Y[1, :] = y0
+for i=2:(T+1)
+  Y[i, :] = c + B1*Y[i-1, :] + U[i-1, :]
+end
+```
+
+Note that in the code above the indexing is a bit strange. That's all because we put the initial value in the `Y` matrix as the first element. 
+
+That's it. We just simulated a VAR(1). 
+
+### Using KeynesVAR
+
+
+
+## The Companion Form
+
+### Using KeynesVAR
+
+
+## Simulating a VAR(p)
+
+### Using KeynesVAR

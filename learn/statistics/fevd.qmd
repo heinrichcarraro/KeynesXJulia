@@ -1,0 +1,4 @@
+---
+title: Forecast Error Variance Decomposition
+description: Find out how much each *shock* contributes to the variance.
+---

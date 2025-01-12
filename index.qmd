@@ -1,0 +1,45 @@
+---
+toc: false
+listing: 
+  - id: listing-models
+    fields: ["title", "description"]
+    type: "grid"
+    contents: 
+      - "var/index.qmd"
+      - "svar/index.qmd"
+      - "local-projections/index.qmd"
+  - id: listing-stats
+    fields: ["title", "description"]
+    type: "grid"
+    contents: 
+      - "learn/statistics/fevd.qmd"
+      - "learn/statistics/forecast.qmd"
+      - "learn/statistics/historical-decomposition.qmd"
+      - "learn/statistics/irf.qmd"
+
+include-in-header:
+      - text: |
+          <script src="hero-parallex-scroll.js"></script>
+---
+
+::: {.hero}
+::: {.hero-image}
+![](logo.png)
+:::
+
+::: {.hero-text}
+# KeynesXJulia
+
+some text comes here that explains what KeynesXJulia is, where I am planning to take it and some more text. some text comes here that explains what KeynesXJulia is, where I am planning to take it and some more text. some text comes here that explains what KeynesXJulia is
+:::
+:::
+
+## Models
+
+::: {#listing-models}
+:::
+
+## Statistics
+
+::: {#listing-stats}
+:::

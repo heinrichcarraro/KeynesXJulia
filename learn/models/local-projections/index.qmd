@@ -1,0 +1,5 @@
+---
+title: Local Projections
+description: If SVARs are like iterative forecasting, then LPs are like direct forecasting.
+---
+

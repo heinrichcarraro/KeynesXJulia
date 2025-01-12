@@ -1,0 +1,6 @@
+---
+title: Structural Vector Autoregressions
+description: Like VAR models but causality plays a role. 
+---
+
+# This is just a placeholder

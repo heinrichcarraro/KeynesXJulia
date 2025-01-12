@@ -1,0 +1,4 @@
+---
+title: Historical Decompositions
+description: Which shocks happened in the past and how did they contribute to historical developments?
+---

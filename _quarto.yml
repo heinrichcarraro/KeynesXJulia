@@ -1,0 +1,90 @@
+project:
+  type: website
+
+website:
+  title: "KeynesXJulia"
+  page-navigation: true
+  navbar:
+    background: secondary
+    logo: logo.png
+    title: false
+    left:
+      - href: index.qmd
+        text: Overview
+      - text: Learn
+        menu: 
+          - text: Models
+            href: learn/models/index.qmd
+          - text: Mathematical Appendix
+            href: learn/math-appendix.qmd
+      - text: Documentation
+        menu: 
+          - text: KeynesAPI.jl
+            href: documentation/KeynesAPI/index.qmd
+          - text: KeynesVAR.jl
+            href: documentation/KeynesVAR/index.qmd
+          - text: KeynesSVAR.jl
+            href: documentation/KeynesSVAR/index.qmd
+          - text: KeynesBootstrap.jl
+            href: documentation/KeynesBootstrap/index.qmd
+    right:
+      - about.qmd
+
+  sidebar: 
+    - id: keynes_api
+      title: "KeynesAPI.jl"
+      style: "floating"
+      contents: 
+        - text: Overview
+          href: documentation/KeynesAPI/index.qmd
+        - text: Models
+          href: documentation/KeynesAPI/models.qmd
+          contents: 
+            - section: "Models"
+              contents: 
+                - text: "KeynesModel"
+                - text: "BayesianModel"
+                - text: "FrequentistModels"
+                - text: "ReducedFormModel"
+                - text: "StructuralModel"
+            - section: "DGP"
+              contents:
+                - text: "KeynesDGP"
+                - text: "ReducedFormDGP"
+                - text: "StructuralDGP"
+        - text: Fitting
+          href: documentation/KeynesAPI/fitting.qmd
+        - text: Statistics
+          href: documentation/KeynesAPI/statistics.qmd
+          contents: 
+            - text: "Statistic"
+            - text: "ModelStatistic"
+            - text: "UncertaintyMethod"
+        - text: Exceptions
+          href: documentation/KeynesAPI/exceptions.qmd
+
+    - id: models
+      title: "Models"
+      style: "floating"
+      contents: 
+        - text: Vector Autoregressions
+          href: learn/models/var/index.qmd
+          contents:
+            - text: Simulation
+              href: learn/models/var/simulation.qmd
+        - text: Structural Vector Autoregressions
+          href: learn/models/svar/index.qmd
+        - text: Local Projections
+          href: learn/models/local-projections/index.qmd
+
+format:
+  html:
+    code-copy: true
+    theme: 
+      dark: darkly
+      light: flatly
+    css: styles.css
+    toc: true
+
+
+

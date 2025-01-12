@@ -1,0 +1,110 @@
+---
+title: Vector Autoregressions
+description: Vector Autoregressions (VAR) are probably the most commonly used method to model dynamics between multiple variables. 
+---
+
+
+<!-- BEGIN: LATEX COMMANDS -->
+\newcommand{\vec}{\text{vec}}
+<!-- END: LATEX COMMANDS -->
+
+{{< include /_utils.qmd >}}
+
+# Vector Autoregressions (VAR)
+
+A Vector Autoregression (VAR) is a simple model that linkes the current data to past observations and an error term. More formally, if we observe a set of variales, a vector of variables, every period and denote this vector with $y_t$, then a VAR(1) model has the form 
+$$
+\by_t = \bc + \bB_1\by_{t-1} + \bu_t,
+$$
+where $\bc$ is some vector of constants, $\bB_1$ the the autoregressive (AR) matrix and $\bu_t$ is some error term. We call this model a VAR(1) model because it relates the current observation $\by_t$ to a single lagged observation $\by_{t-1}$. 
+
+The VAR(1) model can be generalised by extending the number of lags in the model. With $p$ lags in the model, the VAR(p) -- note the $p$ in parentheses -- becomes
+$$
+\by_t = \bc + \sum_{i=1}^p \bB_i \by_{t-i} + \bu_t, 
+$$
+where $\bB_i$ is the i-th autoregressive (AR) matrix. 
+
+## So what does a VAR model do?
+
+Above are the mathematical exppressions, but what does a VAR model actually do and why do people use it? These are good questions, and VAR models have been used in various ways and thus have also been motivated in various ways. The easiest motivation is to note that a VAR model simply links the current observation to past observation. As such, a VAR model is claiming that there are some dynamics in the system -- whether that's an economy, a business, the oxygen level of a person, etc -- and that these dynamics are well described by a linear function that links the current observation to a **finite past**.
+
+Naturally, there are many siutations in which both the **linear** and **finite past** aspects are doubtful. However, both concerns can somewhat be remedied. First, the finite past limitation can be lifted by working with VAR($\infty$) models. Second, the linearity limitation cannot be lifted but can at least be defended in the following way. 
+
+Suppose the real system actually features non-linear dynamics -- however still with a finite past. We could express this mathematically as 
+$$
+\by_t = f(\by_{t-1}, \ldots, \by_{t-p}) + \bu_t.
+$$
+Also suppose that this non-linear system has some fixed point $\bar{\by}$ such that 
+$$
+\bar{\by} = f(\bar{\by}, \ldots, \bar{\by}) + \mathbf{0}.
+$$
+Thus, if all previous values are at the fixed point and the innovation (the error term) are zero, then the system will remain at the fixed point. If these two assumptions describe the true system's dynamics, then the VAR(p) model can be considered as a linear approximation of the possibly complicated non-linear dynamics. Here, the approximation is taken around the fixed point. Thus, taking a first-order Taylor approximation around the fixed point we get
+$$
+\begin{split}
+\by_t &= f(\bar{\by}, \ldots, \bar{\by}) + \sum_{i=1}^p\frac{\partial f}{\partial \by_{t-i}}(\by_{t-i} - \bar{\by}) + \bu_t \\
+&= \underbrace{\left[f(\bar{\by}, \ldots, \bar{\by}) - \sum_{i=1}^p\frac{\partial f}{\partial \by_{t-i}}\bar{\by}\right]}_{\bc} + \sum_{i=1}^p \underbrace{\frac{\partial f}{\partial \by_{t-i}}}_{\bB_i}\by_{t-i} + \bu_t,
+\end{split}
+$$
+which is a VAR(p) model. 
+
+## Other Forms
+
+### Matrix Form
+
+
+$$
+y_t' = \sum_{i=1}^p y_{t-i}'B_i' + u_t'
+$$
+
+$$
+z_t = \left[y_{t-1}', \ldots, y_{t-p}' \right], \quad
+B_+ = \left[B_1, \ldots, B_p \right]
+$$
+
+$$
+y_t' = z_tB_+' + u_t'
+$$
+
+$$
+Y = \begin{bmatrix}y_{p+1}' \\ y_{p+2}' \\ \vdots \\ y_{T-1}' \\ y_{T}' \end{bmatrix}, 
+\quad
+U = \begin{bmatrix}u_{p+1}' \\ u_{p+2}' \\ \vdots \\ u_{T-1}' \\ u_{T}' \end{bmatrix}, 
+\quad
+Z = \begin{bmatrix}z_{p+1} \\ z_{p+1} \\ \vdots \\ z_{T-1} \\ z_{T} \end{bmatrix}
+$$
+
+$$
+Y = ZB_+' + U
+$$
+
+### Vectorised Form
+
+$$
+\begin{split}
+y &= \vec(Y) \\
+&= \vec(ZB_+') + \vec(U) \\
+&= \vec(IZB_+') + \vec(U) \\
+&= (B_+ \otimes I)\vec(Z) + \vec(U)
+\end{split}
+$$
+
+Above works, but for what we want to do, the following way is actually nicer.
+
+$$
+\begin{split}
+y &= \vec(Y) \\
+&= \vec(ZB_+') + \vec(U) \\
+&= \vec(ZB_+'I) + \vec(U) \\
+&= (I \otimes Z)\vec(B_+') + \vec(U)
+&= Xb + u
+\end{split}
+$$
+
+Standard OLS then implies
+
+$$
+\hat{b} = [X'X]^{-1}X'y = \left[(I\otimes Z)'(I\otimes Z)\right]^{-1}(I\otimes Z)y
+$$
+
+### Companion Form
+

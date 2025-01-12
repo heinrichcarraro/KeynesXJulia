@@ -1,0 +1,4 @@
+---
+title: Impulse Response Functions
+description: What happens if there is a shock to the system? What is the effect of monetary and fiscal policy?
+---

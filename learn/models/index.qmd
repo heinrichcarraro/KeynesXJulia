@@ -1,0 +1,12 @@
+---
+title: Models
+sidebar: models
+listing: 
+  fields: ["title", "description"]
+  type: "grid"
+  contents: 
+    - "var/index.qmd"
+    - "svar/index.qmd"
+    - "local-projections/index.qmd"
+---
+

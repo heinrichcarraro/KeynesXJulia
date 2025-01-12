@@ -1,0 +1,4 @@
+---
+title: Forecasts
+description: Learn how to predict the future.
+---

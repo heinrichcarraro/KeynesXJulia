@@ -1,0 +1,15 @@
+<!-- BEGIN: LATEX COMMANDS -->
+\newcommand{\vec}{\text{vec}}
+<!-- END: LATEX COMMANDS -->
+
+# Appendix
+
+
+::: {.callout-note}
+
+# vec() rules
+
+1. $\vec(AXB) = (B' \otimes A)\vec(X)$
+
+:::
+
