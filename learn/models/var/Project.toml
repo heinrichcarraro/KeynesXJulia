@@ -1,2 +1,7 @@
 [deps]
+KeynesAPI = "4a7df8b2-ecbe-4c59-bfd3-138e1c279c2f"
+KeynesBootstrap = "5e097820-3611-45b3-b06a-92346871e0d1"
+KeynesUtils = "ced9de6d-876a-4be4-8284-0c898170464c"
+KeynesVAR = "04937c7e-f03d-4300-ac4f-8fc865a9a929"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"

@@ -1,3 +1,5 @@
+\newcommand{\mb}[1]{\mathbf{#1}}
+
 <!-- Boldface Latin lowercase letters -->
 \newcommand{\ba}{\mathbf{a}}
 \newcommand{\bb}{\mathbf{b}}

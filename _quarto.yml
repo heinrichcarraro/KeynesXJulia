@@ -87,6 +87,8 @@ website:
 format:
   html:
     code-copy: true
+    highlight-style: github
+    reference-location: margin
     theme: 
       dark: darkly
       light: flatly

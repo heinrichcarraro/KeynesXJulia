@@ -1,6 +1,7 @@
 ---
 title: Vector Autoregressions
 description: Vector Autoregressions (VAR) are probably the most commonly used method to model dynamics between multiple variables. 
+engine: julia
 ---
 
 
@@ -12,11 +13,11 @@ description: Vector Autoregressions (VAR) are probably the most commonly used me
 
 # Vector Autoregressions (VAR)
 
-A Vector Autoregression (VAR) is a simple model that linkes the current data to past observations and an error term. More formally, if we observe a set of variales, a vector of variables, every period and denote this vector with $y_t$, then a VAR(1) model has the form 
+A Vector Autoregression (VAR) is a simple model that links the current data to past observations and an error term. More formally, if we observe a set of variales, a vector of variables, every period and denote this vector with $y_t$, then a VAR(1) model has the form 
 $$
 \by_t = \bc + \bB_1\by_{t-1} + \bu_t,
 $$
-where $\bc$ is some vector of constants, $\bB_1$ the the autoregressive (AR) matrix and $\bu_t$ is some error term. We call this model a VAR(1) model because it relates the current observation $\by_t$ to a single lagged observation $\by_{t-1}$. 
+where $\bc$ is some vector of constants, $\bB_1$ the the autoregressive (AR) matrix and $\bu_t$ is some error term with mean $\mb{0}$ and covariance $\bSigma_u$. We call this model a VAR(1) model because it relates the current observation $\by_t$ to a single lagged observation $\by_{t-1}$. 
 
 The VAR(1) model can be generalised by extending the number of lags in the model. With $p$ lags in the model, the VAR(p) -- note the $p$ in parentheses -- becomes
 $$
@@ -49,62 +50,113 @@ which is a VAR(p) model.
 
 ## Other Forms
 
+At times it can be convenient to represent the VAR(p) model in other, yet still equivalent, mathematical forms. Each form has advantages and disadvantages. 
+
 ### Matrix Form
 
+The matrix form is best used when deriving computations methods. Data is naturally represented as matrices and thus having a matrix form allows us to link the VAR most naturally to data structures used by computers. 
 
+To move from the standard representation above to the matrix representation, we first take the transpose
 $$
-y_t' = \sum_{i=1}^p y_{t-i}'B_i' + u_t'
-$$
-
-$$
-z_t = \left[y_{t-1}', \ldots, y_{t-p}' \right], \quad
-B_+ = \left[B_1, \ldots, B_p \right]
+\by_t' = \bc' + \sum_{i=1}^p \by_{t-i}'\bB_i' + \bu_t'.
 $$
 
+We next summarise this transposed system by introducing $\bz_t$ and $\bB_+$, where the former summarises all the data past data up to a finite horizon, and the latter collects all coefficients in a single matrix. 
 $$
-y_t' = z_tB_+' + u_t'
+\bz_t = \left[\by_{t-1}', \ldots, \by_{t-p}' \right], \quad
+\bB_+ = \left[\bc, \bB_1, \ldots, \bB_p \right]
 $$
 
+Using $\bz_t$ and $\bB_+$, we can express the VAR(p) in the following way
 $$
-Y = \begin{bmatrix}y_{p+1}' \\ y_{p+2}' \\ \vdots \\ y_{T-1}' \\ y_{T}' \end{bmatrix}, 
+\by_t' = \bz_t\bB_+' + \bu_t'.
+$$
+
+Moving from this form to the matrix form simply consists of stacking the equations for each time period underneath each other. Note though that the first equation is for $t=p+1$, since no data exists for periods $t\leq 0$. 
+$$
+\bY = \begin{bmatrix}\by_{p+1}' \\ \by_{p+2}' \\ \vdots \\ \by_{T-1}' \\ \by_{T}' \end{bmatrix}, 
 \quad
-U = \begin{bmatrix}u_{p+1}' \\ u_{p+2}' \\ \vdots \\ u_{T-1}' \\ u_{T}' \end{bmatrix}, 
+\bU = \begin{bmatrix}\bu_{p+1}' \\ \bu_{p+2}' \\ \vdots \\ \bu_{T-1}' \\ \bu_{T}' \end{bmatrix}, 
 \quad
-Z = \begin{bmatrix}z_{p+1} \\ z_{p+1} \\ \vdots \\ z_{T-1} \\ z_{T} \end{bmatrix}
+\bZ = \begin{bmatrix}\bz_{p+1} \\ \bz_{p+1} \\ \vdots \\ \bz_{T-1} \\ \bz_{T} \end{bmatrix}
 $$
 
+The final matrix form is then given by the following equation 
 $$
-Y = ZB_+' + U
+\bY = \bZ\bB_+' + \bU.
 $$
+Note that this is simply a matrix equation with unknown coefficients. We may thus attempt to solve for the unknowns by using least squares. However, since matrix differentation can be a bit tricky at times, and vector differentation is much more common, we may prefer thinking about the model in a vectorised rather than matrix representation.
 
 ### Vectorised Form
 
+To move from the matrix representation to the vectorised representation we apply the $\vec$ operator.^[See the [mathematical appendix](/learn/math-appendix.qmd) for details.]
 $$
 \begin{split}
-y &= \vec(Y) \\
-&= \vec(ZB_+') + \vec(U) \\
-&= \vec(IZB_+') + \vec(U) \\
-&= (B_+ \otimes I)\vec(Z) + \vec(U)
+\by &= \vec(\bY) \\
+&= \vec(\bZ\bB_+') + \vec(\bU) \\
+&= \vec(\bZ\bB_+'\bI) + \vec(\bU) \\
+&= (\bI \otimes \bZ)\vec(\bB_+') + \vec(\bU)
+&= \bX\bb + \bu
 \end{split}
 $$
-
-Above works, but for what we want to do, the following way is actually nicer.
-
-$$
-\begin{split}
-y &= \vec(Y) \\
-&= \vec(ZB_+') + \vec(U) \\
-&= \vec(ZB_+'I) + \vec(U) \\
-&= (I \otimes Z)\vec(B_+') + \vec(U)
-&= Xb + u
-\end{split}
-$$
-
-Standard OLS then implies
-
-$$
-\hat{b} = [X'X]^{-1}X'y = \left[(I\otimes Z)'(I\otimes Z)\right]^{-1}(I\otimes Z)y
-$$
+Note that the last lines substitute $\bX = (\bI \otimes \bZ)$, $\bb=\vec(\bB_+)$, and $\bu = \vec(\bU)$ to more clearly show the connection to standard linear regressions. This system can now be solves using ordinary least squares or any other method, including penalised methods. 
 
 ### Companion Form
 
+While the matrix form and the vector form are often used to derive computational methods to estimate a VAR(p), the companion form is more often used to analyse the dynamics of a VAR(p). Analysing dynamics of a VAR(1) is much easier than those of a VAR(p), since all we need to keep track of is last period's value. However, it turns out that the previous statement is not entirely correct, the reason for which is the companion form. The companion form of a VAR(p) is basically a re-interpretation that shows that any VAR(p) can be written as a VAR(1) if we extend out state vector. State vectors do not usually come up in VAR analysis, however, $\by_t$ is nothing but a vector of states, all of which observed, which evolves over time. The choice of states to include at time $t$ is arbitrary, as long as no future information is included -- the basic assumption is that time $t$ state vectors are fully observable at time $t$. 
+
+We can exploit the state interpretation of $\by_t$ and include past observations into the state vector. Thus, define
+$$
+\tilde{\by}_t' = (\by_t', \by_{t-1}', \ldots, \by_{t-p+2}', \by_{t-p+1}').
+$$
+
+The initial VAR(p) relationship then implies the following dynamic relationship for $\tilde{\by}_t$
+$$
+\tilde{\by}_t = 
+\begin{bmatrix}
+\bB_1 & \bB_2 & \ldots & \bB_{p-1} & \bB_p \\
+\bI & \bO & \ldots & \bO & \bO \\
+\bO & \bI & \ldots & \bO & \bO \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+\bO & \bO & \ldots & \bI & \bO
+\end{bmatrix}
+\tilde{\by}_{t-1} + 
+\begin{bmatrix}\bu_t \\ \mb{0} \\ \vdots \\ \mb{0} \\ \mb{0} \end{bmatrix},
+$$
+which is a VAR(1) in the state vector $\tilde{\by}_t$. 
+
+To move from the companion form back to the original state vector $\by_t$, we simply define 
+$$
+\bJ = [\bI, \bO, \ldots, \bO, \bO]
+$$
+and pre-multiply $\tilde{\by}_t$ by $\bJ$
+$$
+\by_t = \bJ\tilde{\by}_t.
+$$
+
+Thus, if we are able to analyse the dynamics of a VAR(1), then we are also able to analyse the dyanmics of a VAR(p). For that reason, much of the other sections will always first focus on the VAR(1) case and will then exploit the companion matrix to generalise the findings to a VAR(p) case. 
+
+## KeynesVAR
+
+KeynesVAR uses the matrix representation internally. As such, a VAR DGP is specified by providing $\bB_+$ and the covariance matrix for the error term $\bu_t$. 
+
+
+```{julia}
+#| output: false
+
+using LinearAlgebra
+using KeynesVAR
+using Random
+
+K = 3  # Number of variables in the VAR
+p = 4  # Number of lags
+
+B = randn(K, K*p)  # No constant included
+Sigma_u = diagm(ones(K))  # Covariance of error terms
+dgp_var = VAR(B, Sigma_u)  # Specification of VAR DGP
+
+B = randn(K, K*p + p)  # Including a constant
+Sigma_u = diagm(ones(K))  # Covariance of error terms
+dgp_var = VAR(B, Sigma_u)  # Specification of VAR DGP
+
+```

@@ -17,6 +17,8 @@ Since the VAR model is a data generating process, we should be able to simulate 
 #| echo: false
 #| output: false
 using Random
+using LinearAlgebra
+using KeynesVAR
 Random.seed!(123)
 ```
 
@@ -71,14 +73,59 @@ That's it. We just simulated a VAR(1).
 
 ### Using KeynesVAR
 
-
-
-
-## The Companion Form
-
-### Using KeynesVAR
-
+```{julia}
+dgp = VAR(B1, diagm(ones(K)))
+model = KeynesVAR.simulate(dgp, T, nothing)
+```
 
 ## Simulating a VAR(p)
 
+
+```{julia}
+K = 3
+p = 4
+N = 250
+```
+
 ### Using KeynesVAR
+
+
+```{julia}
+Sigma = diagm(ones(K))
+B = reduce(hcat, 0.5^i * randn(K, K) for i=1:p)
+```
+
+```{julia}
+using KeynesUtils
+C = KeynesUtils.make_companion_matrix(B)
+maximum(abs, eigvals(C))
+```
+
+```{julia}
+dgp = VAR(B, Sigma)
+model = simulate(dgp, T, nothing)
+```
+
+```{julia}
+trend_exponents = [0]  # only a constant
+B2 = hcat(randn(K, 1), B)
+dgp = VAR(B2, Sigma)
+model = simulate(dgp, T, trend_exponents)
+```
+
+```{julia}
+trend_exponents = [0, 1]  # constant and linear trend
+B3 = hcat(randn(K, 2), B)
+dgp = VAR(B3, Sigma)
+model = simulate(dgp, T, trend_exponents)
+```
+
+
+```{julia}
+# using non Gaussian errors
+# i.e. using Uniform errors
+errors = rand(K, T+p)
+model = simulate!(dgp, errors, trend_exponents) 
+```
+
+
