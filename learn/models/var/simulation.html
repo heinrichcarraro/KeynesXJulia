@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-d3cc6ab984b791c0db5b133c56557cf8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-5e9f69cd4fc864c05ae75c4344308cf5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-c39339e69be5937e5cbef7294d28053a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-0fe12a5726c10215f7f905ad2aeed9d4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -138,7 +138,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-sidebar floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -275,20 +275,16 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#using-keynesvar" id="toc-using-keynesvar" class="nav-link" data-scroll-target="#using-keynesvar">Using KeynesVAR</a></li>
   </ul></li>
-  <li><a href="#the-companion-form" id="toc-the-companion-form" class="nav-link" data-scroll-target="#the-companion-form">The Companion Form</a>
-  <ul class="collapse">
-  <li><a href="#using-keynesvar-1" id="toc-using-keynesvar-1" class="nav-link" data-scroll-target="#using-keynesvar-1">Using KeynesVAR</a></li>
-  </ul></li>
   <li><a href="#simulating-a-varp" id="toc-simulating-a-varp" class="nav-link" data-scroll-target="#simulating-a-varp">Simulating a VAR(p)</a>
   <ul class="collapse">
-  <li><a href="#using-keynesvar-2" id="toc-using-keynesvar-2" class="nav-link" data-scroll-target="#using-keynesvar-2">Using KeynesVAR</a></li>
+  <li><a href="#using-keynesvar-1" id="toc-using-keynesvar-1" class="nav-link" data-scroll-target="#using-keynesvar-1">Using KeynesVAR</a></li>
   </ul></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../learn/models/var/index.html">Vector Autoregressions</a></li><li class="breadcrumb-item"><a href="../../../learn/models/var/simulation.html">Simulation</a></li></ol></nav></header>
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../learn/models/var/index.html">Vector Autoregressions</a></li><li class="breadcrumb-item"><a href="../../../learn/models/var/simulation.html">Simulation</a></li></ol></nav></header>
 
 
 
@@ -297,10 +293,10 @@ window.Quarto = {
 <!-- Boldface Latin uppercase letters -->
 <!-- Boldface Greek lowercase letters -->
 <!-- Boldface Greek uppercase letters -->
-<section id="how-do-we-simulate-varp-models" class="level1">
+<section id="how-do-we-simulate-varp-models" class="level1 page-columns page-full">
 <h1>How do we simulate VAR(p) models?</h1>
 <p>Since the VAR model is a data generating process, we should be able to simulate from it. And that is indeed what we will do in this section. Why do we want to simulate from the model? Simply because being able to simulate from a model allows us to explore the model, test theories, and gain insights that are otherwise only gained using maths – which is oftentimes more difficult.</p>
-<section id="simulating-a-var1-model" class="level2">
+<section id="simulating-a-var1-model" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="simulating-a-var1-model">Simulating a VAR(1) model</h2>
 <p>We start simple and ask how we can simulate a VAR(1) model. Remember that VAR(1) was given by <span class="math display">\[
 \mathbf{y}_{t} = \mathbf{c}+ \mathbf{B}_1\mathbf{y}_{t-1} + \mathbf{u}_t.
@@ -315,7 +311,7 @@ window.Quarto = {
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="fu">zeros</span>(K)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Third, we need to make some assumption on the innovations (the error terms) <span class="math inline">\(\mathbf{u}_t\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> A very common assumption is that these are normally distributed. For simplicity, we will stick to standard normals. It’s good practice to draw all of the error terms at the same time.</p>
-<div id="8" class="cell" data-execution_count="1">
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;I will use innovation and error interchangeably to describe <span class="math inline">\(\mathbf{u}_t\)</span>.</p></div></div><div id="8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="fu">randn</span>(T, K)  <span class="co"># each row corresponds to one u_t</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>That’s it. We are ready to simulate the model. Or are we? Let’s check how we could get the first period’s value. For the first period we have <span class="math display">\[
@@ -336,18 +332,52 @@ window.Quarto = {
 <p>That’s it. We just simulated a VAR(1).</p>
 <section id="using-keynesvar" class="level3">
 <h3 class="anchored" data-anchor-id="using-keynesvar">Using KeynesVAR</h3>
-</section>
-</section>
-<section id="the-companion-form" class="level2">
-<h2 class="anchored" data-anchor-id="the-companion-form">The Companion Form</h2>
-<section id="using-keynesvar-1" class="level3">
-<h3 class="anchored" data-anchor-id="using-keynesvar-1">Using KeynesVAR</h3>
+<div id="14" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dgp <span class="op">=</span> <span class="fu">VAR</span>(B1, <span class="fu">diagm</span>(<span class="fu">ones</span>(K)))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> KeynesVAR.<span class="fu">simulate</span>(dgp, T, <span class="cn">nothing</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 <section id="simulating-a-varp" class="level2">
 <h2 class="anchored" data-anchor-id="simulating-a-varp">Simulating a VAR(p)</h2>
-<section id="using-keynesvar-2" class="level3">
-<h3 class="anchored" data-anchor-id="using-keynesvar-2">Using KeynesVAR</h3>
+<div id="16" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="fl">3</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">4</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fl">250</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="using-keynesvar-1" class="level3">
+<h3 class="anchored" data-anchor-id="using-keynesvar-1">Using KeynesVAR</h3>
+<div id="18" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Sigma <span class="op">=</span> <span class="fu">diagm</span>(<span class="fu">ones</span>(K))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">reduce</span>(hcat, <span class="fl">0.5</span><span class="op">^</span>i <span class="op">*</span> <span class="fu">randn</span>(K, K) <span class="cf">for</span> i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="20" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">KeynesUtils</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> KeynesUtils.<span class="fu">make_companion_matrix</span>(B)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">maximum</span>(abs, <span class="fu">eigvals</span>(C))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="22" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dgp <span class="op">=</span> <span class="fu">VAR</span>(B, Sigma)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="fu">simulate</span>(dgp, T, <span class="cn">nothing</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="24" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>trend_exponents <span class="op">=</span> [<span class="fl">0</span>]  <span class="co"># only a constant</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>B2 <span class="op">=</span> <span class="fu">hcat</span>(<span class="fu">randn</span>(K, <span class="fl">1</span>), B)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>dgp <span class="op">=</span> <span class="fu">VAR</span>(B2, Sigma)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="fu">simulate</span>(dgp, T, trend_exponents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="26" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>trend_exponents <span class="op">=</span> [<span class="fl">0</span>, <span class="fl">1</span>]  <span class="co"># constant and linear trend</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>B3 <span class="op">=</span> <span class="fu">hcat</span>(<span class="fu">randn</span>(K, <span class="fl">2</span>), B)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>dgp <span class="op">=</span> <span class="fu">VAR</span>(B3, Sigma)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="fu">simulate</span>(dgp, T, trend_exponents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="28" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using non Gaussian errors</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># i.e. using Uniform errors</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> <span class="fu">rand</span>(K, T<span class="op">+</span>p)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="fu">simulate!</span>(dgp, errors, trend_exponents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -355,12 +385,7 @@ window.Quarto = {
 </section>
 
 
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>I will use innovation and error interchangeably to describe <span class="math inline">\(\mathbf{u}_t\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

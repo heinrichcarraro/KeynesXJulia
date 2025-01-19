@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -37,12 +71,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-d3cc6ab984b791c0db5b133c56557cf8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-5e9f69cd4fc864c05ae75c4344308cf5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-c39339e69be5937e5cbef7294d28053a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-0fe12a5726c10215f7f905ad2aeed9d4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +138,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-sidebar floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -244,12 +278,13 @@ window.Quarto = {
   <li><a href="#vectorised-form" id="toc-vectorised-form" class="nav-link" data-scroll-target="#vectorised-form">Vectorised Form</a></li>
   <li><a href="#companion-form" id="toc-companion-form" class="nav-link" data-scroll-target="#companion-form">Companion Form</a></li>
   </ul></li>
+  <li><a href="#keynesvar" id="toc-keynesvar" class="nav-link" data-scroll-target="#keynesvar">KeynesVAR</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -281,11 +316,11 @@ window.Quarto = {
 <!-- Boldface Latin uppercase letters -->
 <!-- Boldface Greek lowercase letters -->
 <!-- Boldface Greek uppercase letters -->
-<section id="vector-autoregressions-var" class="level1">
+<section id="vector-autoregressions-var" class="level1 page-columns page-full">
 <h1>Vector Autoregressions (VAR)</h1>
-<p>A Vector Autoregression (VAR) is a simple model that linkes the current data to past observations and an error term. More formally, if we observe a set of variales, a vector of variables, every period and denote this vector with <span class="math inline">\(y_t\)</span>, then a VAR(1) model has the form <span class="math display">\[
+<p>A Vector Autoregression (VAR) is a simple model that links the current data to past observations and an error term. More formally, if we observe a set of variales, a vector of variables, every period and denote this vector with <span class="math inline">\(y_t\)</span>, then a VAR(1) model has the form <span class="math display">\[
 \mathbf{y}_t = \mathbf{c}+ \mathbf{B}_1\mathbf{y}_{t-1} + \mathbf{u}_t,
-\]</span> where <span class="math inline">\(\mathbf{c}\)</span> is some vector of constants, <span class="math inline">\(\mathbf{B}_1\)</span> the the autoregressive (AR) matrix and <span class="math inline">\(\mathbf{u}_t\)</span> is some error term. We call this model a VAR(1) model because it relates the current observation <span class="math inline">\(\mathbf{y}_t\)</span> to a single lagged observation <span class="math inline">\(\mathbf{y}_{t-1}\)</span>.</p>
+\]</span> where <span class="math inline">\(\mathbf{c}\)</span> is some vector of constants, <span class="math inline">\(\mathbf{B}_1\)</span> the the autoregressive (AR) matrix and <span class="math inline">\(\mathbf{u}_t\)</span> is some error term with mean <span class="math inline">\(\mathbf{0}\)</span> and covariance <span class="math inline">\(\boldsymbol{\Sigma}_u\)</span>. We call this model a VAR(1) model because it relates the current observation <span class="math inline">\(\mathbf{y}_t\)</span> to a single lagged observation <span class="math inline">\(\mathbf{y}_{t-1}\)</span>.</p>
 <p>The VAR(1) model can be generalised by extending the number of lags in the model. With <span class="math inline">\(p\)</span> lags in the model, the VAR(p) – note the <span class="math inline">\(p\)</span> in parentheses – becomes <span class="math display">\[
 \mathbf{y}_t = \mathbf{c}+ \sum_{i=1}^p \mathbf{B}_i \mathbf{y}_{t-i} + \mathbf{u}_t,
 \]</span> where <span class="math inline">\(\mathbf{B}_i\)</span> is the i-th autoregressive (AR) matrix.</p>
@@ -304,63 +339,95 @@ window.Quarto = {
 \end{split}
 \]</span> which is a VAR(p) model.</p>
 </section>
-<section id="other-forms" class="level2">
+<section id="other-forms" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="other-forms">Other Forms</h2>
+<p>At times it can be convenient to represent the VAR(p) model in other, yet still equivalent, mathematical forms. Each form has advantages and disadvantages.</p>
 <section id="matrix-form" class="level3">
 <h3 class="anchored" data-anchor-id="matrix-form">Matrix Form</h3>
-<p><span class="math display">\[
-y_t' = \sum_{i=1}^p y_{t-i}'B_i' + u_t'
+<p>The matrix form is best used when deriving computations methods. Data is naturally represented as matrices and thus having a matrix form allows us to link the VAR most naturally to data structures used by computers.</p>
+<p>To move from the standard representation above to the matrix representation, we first take the transpose <span class="math display">\[
+\mathbf{y}_t' = \mathbf{c}' + \sum_{i=1}^p \mathbf{y}_{t-i}'\mathbf{B}_i' + \mathbf{u}_t'.
 \]</span></p>
-<p><span class="math display">\[
-z_t = \left[y_{t-1}', \ldots, y_{t-p}' \right], \quad
-B_+ = \left[B_1, \ldots, B_p \right]
+<p>We next summarise this transposed system by introducing <span class="math inline">\(\mathbf{z}_t\)</span> and <span class="math inline">\(\mathbf{B}_+\)</span>, where the former summarises all the data past data up to a finite horizon, and the latter collects all coefficients in a single matrix. <span class="math display">\[
+\mathbf{z}_t = \left[\mathbf{y}_{t-1}', \ldots, \mathbf{y}_{t-p}' \right], \quad
+\mathbf{B}_+ = \left[\mathbf{c}, \mathbf{B}_1, \ldots, \mathbf{B}_p \right]
 \]</span></p>
-<p><span class="math display">\[
-y_t' = z_tB_+' + u_t'
+<p>Using <span class="math inline">\(\mathbf{z}_t\)</span> and <span class="math inline">\(\mathbf{B}_+\)</span>, we can express the VAR(p) in the following way <span class="math display">\[
+\mathbf{y}_t' = \mathbf{z}_t\mathbf{B}_+' + \mathbf{u}_t'.
 \]</span></p>
-<p><span class="math display">\[
-Y = \begin{bmatrix}y_{p+1}' \\ y_{p+2}' \\ \vdots \\ y_{T-1}' \\ y_{T}' \end{bmatrix},
+<p>Moving from this form to the matrix form simply consists of stacking the equations for each time period underneath each other. Note though that the first equation is for <span class="math inline">\(t=p+1\)</span>, since no data exists for periods <span class="math inline">\(t\leq 0\)</span>. <span class="math display">\[
+\mathbf{Y}= \begin{bmatrix}\mathbf{y}_{p+1}' \\ \mathbf{y}_{p+2}' \\ \vdots \\ \mathbf{y}_{T-1}' \\ \mathbf{y}_{T}' \end{bmatrix},
 \quad
-U = \begin{bmatrix}u_{p+1}' \\ u_{p+2}' \\ \vdots \\ u_{T-1}' \\ u_{T}' \end{bmatrix},
+\mathbf{U}= \begin{bmatrix}\mathbf{u}_{p+1}' \\ \mathbf{u}_{p+2}' \\ \vdots \\ \mathbf{u}_{T-1}' \\ \mathbf{u}_{T}' \end{bmatrix},
 \quad
-Z = \begin{bmatrix}z_{p+1} \\ z_{p+1} \\ \vdots \\ z_{T-1} \\ z_{T} \end{bmatrix}
+\mathbf{Z}= \begin{bmatrix}\mathbf{z}_{p+1} \\ \mathbf{z}_{p+1} \\ \vdots \\ \mathbf{z}_{T-1} \\ \mathbf{z}_{T} \end{bmatrix}
 \]</span></p>
-<p><span class="math display">\[
-Y = ZB_+' + U
-\]</span></p>
+<p>The final matrix form is then given by the following equation <span class="math display">\[
+\mathbf{Y}= \mathbf{Z}\mathbf{B}_+' + \mathbf{U}.
+\]</span> Note that this is simply a matrix equation with unknown coefficients. We may thus attempt to solve for the unknowns by using least squares. However, since matrix differentation can be a bit tricky at times, and vector differentation is much more common, we may prefer thinking about the model in a vectorised rather than matrix representation.</p>
 </section>
-<section id="vectorised-form" class="level3">
+<section id="vectorised-form" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="vectorised-form">Vectorised Form</h3>
-<p><span class="math display">\[
+<p>To move from the matrix representation to the vectorised representation we apply the <span class="math inline">\(\text{vec}\)</span> operator.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="math display">\[
 \begin{split}
-y &amp;= \text{vec}(Y) \\
-&amp;= \text{vec}(ZB_+') + \text{vec}(U) \\
-&amp;= \text{vec}(IZB_+') + \text{vec}(U) \\
-&amp;= (B_+ \otimes I)\text{vec}(Z) + \text{vec}(U)
+\mathbf{y}&amp;= \text{vec}(\mathbf{Y}) \\
+&amp;= \text{vec}(\mathbf{Z}\mathbf{B}_+') + \text{vec}(\mathbf{U}) \\
+&amp;= \text{vec}(\mathbf{Z}\mathbf{B}_+'\mathbf{I}) + \text{vec}(\mathbf{U}) \\
+&amp;= (\mathbf{I}\otimes \mathbf{Z})\text{vec}(\mathbf{B}_+') + \text{vec}(\mathbf{U})
+&amp;= \mathbf{X}\mathbf{b}+ \mathbf{u}
 \end{split}
-\]</span></p>
-<p>Above works, but for what we want to do, the following way is actually nicer.</p>
-<p><span class="math display">\[
-\begin{split}
-y &amp;= \text{vec}(Y) \\
-&amp;= \text{vec}(ZB_+') + \text{vec}(U) \\
-&amp;= \text{vec}(ZB_+'I) + \text{vec}(U) \\
-&amp;= (I \otimes Z)\text{vec}(B_+') + \text{vec}(U)
-&amp;= Xb + u
-\end{split}
-\]</span></p>
-<p>Standard OLS then implies</p>
-<p><span class="math display">\[
-\hat{b} = [X'X]^{-1}X'y = \left[(I\otimes Z)'(I\otimes Z)\right]^{-1}(I\otimes Z)y
-\]</span></p>
-</section>
+\]</span> Note that the last lines substitute <span class="math inline">\(\mathbf{X}= (\mathbf{I}\otimes \mathbf{Z})\)</span>, <span class="math inline">\(\mathbf{b}=\text{vec}(\mathbf{B}_+)\)</span>, and <span class="math inline">\(\mathbf{u}= \text{vec}(\mathbf{U})\)</span> to more clearly show the connection to standard linear regressions. This system can now be solves using ordinary least squares or any other method, including penalised methods.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;See the <a href="../../../learn/math-appendix.html">mathematical appendix</a> for details.</p></div></div></section>
 <section id="companion-form" class="level3">
 <h3 class="anchored" data-anchor-id="companion-form">Companion Form</h3>
+<p>While the matrix form and the vector form are often used to derive computational methods to estimate a VAR(p), the companion form is more often used to analyse the dynamics of a VAR(p). Analysing dynamics of a VAR(1) is much easier than those of a VAR(p), since all we need to keep track of is last period’s value. However, it turns out that the previous statement is not entirely correct, the reason for which is the companion form. The companion form of a VAR(p) is basically a re-interpretation that shows that any VAR(p) can be written as a VAR(1) if we extend out state vector. State vectors do not usually come up in VAR analysis, however, <span class="math inline">\(\mathbf{y}_t\)</span> is nothing but a vector of states, all of which observed, which evolves over time. The choice of states to include at time <span class="math inline">\(t\)</span> is arbitrary, as long as no future information is included – the basic assumption is that time <span class="math inline">\(t\)</span> state vectors are fully observable at time <span class="math inline">\(t\)</span>.</p>
+<p>We can exploit the state interpretation of <span class="math inline">\(\mathbf{y}_t\)</span> and include past observations into the state vector. Thus, define <span class="math display">\[
+\tilde{\mathbf{y}}_t' = (\mathbf{y}_t', \mathbf{y}_{t-1}', \ldots, \mathbf{y}_{t-p+2}', \mathbf{y}_{t-p+1}').
+\]</span></p>
+<p>The initial VAR(p) relationship then implies the following dynamic relationship for <span class="math inline">\(\tilde{\mathbf{y}}_t\)</span> <span class="math display">\[
+\tilde{\mathbf{y}}_t =
+\begin{bmatrix}
+\mathbf{B}_1 &amp; \mathbf{B}_2 &amp; \ldots &amp; \mathbf{B}_{p-1} &amp; \mathbf{B}_p \\
+\mathbf{I}&amp; \mathbf{O}&amp; \ldots &amp; \mathbf{O}&amp; \mathbf{O}\\
+\mathbf{O}&amp; \mathbf{I}&amp; \ldots &amp; \mathbf{O}&amp; \mathbf{O}\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+\mathbf{O}&amp; \mathbf{O}&amp; \ldots &amp; \mathbf{I}&amp; \mathbf{O}
+\end{bmatrix}
+\tilde{\mathbf{y}}_{t-1} +
+\begin{bmatrix}\mathbf{u}_t \\ \mathbf{0} \\ \vdots \\ \mathbf{0} \\ \mathbf{0} \end{bmatrix},
+\]</span> which is a VAR(1) in the state vector <span class="math inline">\(\tilde{\mathbf{y}}_t\)</span>.</p>
+<p>To move from the companion form back to the original state vector <span class="math inline">\(\mathbf{y}_t\)</span>, we simply define <span class="math display">\[
+\mathbf{J}= [\mathbf{I}, \mathbf{O}, \ldots, \mathbf{O}, \mathbf{O}]
+\]</span> and pre-multiply <span class="math inline">\(\tilde{\mathbf{y}}_t\)</span> by <span class="math inline">\(\mathbf{J}\)</span> <span class="math display">\[
+\mathbf{y}_t = \mathbf{J}\tilde{\mathbf{y}}_t.
+\]</span></p>
+<p>Thus, if we are able to analyse the dynamics of a VAR(1), then we are also able to analyse the dyanmics of a VAR(p). For that reason, much of the other sections will always first focus on the VAR(1) case and will then exploit the companion matrix to generalise the findings to a VAR(p) case.</p>
+</section>
+</section>
+<section id="keynesvar" class="level2">
+<h2 class="anchored" data-anchor-id="keynesvar">KeynesVAR</h2>
+<p>KeynesVAR uses the matrix representation internally. As such, a VAR DGP is specified by providing <span class="math inline">\(\mathbf{B}_+\)</span> and the covariance matrix for the error term <span class="math inline">\(\mathbf{u}_t\)</span>.</p>
+<div id="2" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">KeynesVAR</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="fl">3</span>  <span class="co"># Number of variables in the VAR</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">4</span>  <span class="co"># Number of lags</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">randn</span>(K, K<span class="op">*</span>p)  <span class="co"># No constant included</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Sigma_u <span class="op">=</span> <span class="fu">diagm</span>(<span class="fu">ones</span>(K))  <span class="co"># Covariance of error terms</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>dgp_var <span class="op">=</span> <span class="fu">VAR</span>(B, Sigma_u)  <span class="co"># Specification of VAR DGP</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">randn</span>(K, K<span class="op">*</span>p <span class="op">+</span> p)  <span class="co"># Including a constant</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Sigma_u <span class="op">=</span> <span class="fu">diagm</span>(<span class="fu">ones</span>(K))  <span class="co"># Covariance of error terms</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>dgp_var <span class="op">=</span> <span class="fu">VAR</span>(B, Sigma_u)  <span class="co"># Specification of VAR DGP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
 </section>
-</section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
